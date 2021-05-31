@@ -110,6 +110,13 @@ declare module 'node-nicehash' {
     creatorUserId: string
   }
 
+  export interface OrderStatus {
+    columns: string[]
+    data: number[][]
+    displayMarketFactor: string
+    marketFactor: string
+  }
+
   export interface HashpowerOrder {
     id: string
     type: string
@@ -182,7 +189,21 @@ declare module 'node-nicehash' {
     pagination: Pagination
   }
 
+  export interface MiningAlgorithms {
+    miningAlgorithms: AlgorithmDetail[]
+  }
+
+  export interface AlgorithmDetail {
+    algorithm: string
+    title: string
+    speed: number
+    paying: number
+  }
+
   export interface Nicehash {
+    public: {
+      simplemultialgo (): Promise<MiningAlgorithms>
+    },
     accounting: {
       account2 (options?: { extendedResponse?: boolean, fiat?: string }): Promise<Account2>
       account2Currency (currency: string): Promise<Account2Currency>
@@ -190,6 +211,7 @@ declare module 'node-nicehash' {
     hashpower: {
       myOrders (options: { algorithm?: string, status?: OrderStatusType, active?: boolean, market?: MarketType, ts: number, op: string, limit: number }): Promise<MyOrders>
       order (id: string): Promise<MyOrder>
+      orderStatus (id: string): Promise<OrderStatus>
       createOrder (options: { market: string, algorithm: string, amount: number, displayMarketFactor: string, marketFactor: number, price: number, poolId: string, limit: number, type: string }): Promise<any>
       cancelOrder (id: string): Promise<any>
       refillOrder (id: string, options?: { amount?: number }): Promise<any>

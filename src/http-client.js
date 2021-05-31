@@ -59,21 +59,29 @@ const createApiCall = ({ key, secret, organizationId, endpoint, getTime = create
     'X-User-Lang': 'zh'
   }
 
-  const response = await axios.request({
-    url: `${endpoint}${path}`,
-    method,
-    params: request?.query,
-    data: request?.body,
-    headers
-  })
+  try {
+    const response = await axios.request({
+      url: `${endpoint}${path}`,
+      method,
+      params: request?.query,
+      data: request?.body,
+      headers,
+    })
 
-  return response.data
+    return response.data
+  } catch (err) {
+    console.error(`${endpoint}${path}`, err.response?.data?.errors)
+    throw err
+  }
 }
 
 export default options => {
   const endpoint = (options && options.httpBase) || BASE
   const apiRequest = createApiCall({ ...options, endpoint })
   return {
+    public: {
+      simplemultialgo: () => apiRequest('GET', '/main/api/v2/public/simplemultialgo/info')
+    },
     accounting: {
       account2: (query) => apiRequest('GET', '/main/api/v2/accounting/accounts2', { query }),
       account2Currency: (currency) => apiRequest('GET', `/main/api/v2/accounting/account2/${currency}`)
@@ -81,6 +89,7 @@ export default options => {
     hashpower: {
       myOrders: (query) => apiRequest('GET', '/main/api/v2/hashpower/myOrders', { query }),
       order: (id) => apiRequest('GET', `/main/api/v2/hashpower/order/${id}`),
+      orderStatus: (id) => apiRequest('GET', `/main/api/v2/hashpower/order/${id}/stats`),
       createOrder: (body) => apiRequest('POST', '/main/api/v2/hashpower/order', { body }),
       cancelOrder: (id) => apiRequest('DELETE', `/main/api/v2/hashpower/order/${id}`),
       refillOrder: (id, body) => apiRequest('POST', `/main/api/v2/hashpower/order/${id}/refill`, { body }),
@@ -93,7 +102,7 @@ export default options => {
     exchange: {
       createOrder: (query) => apiRequest('POST', '/exchange/api/v2/order', { query }),
       myOrders: (query) => apiRequest('GET', '/exchange/api/v2/info/myOrders', { query }),
-      cancelAllOrders: (query) => apiRequest('DELETE', '/exchange/api/v2/info/cancelAllOrders', { query })
+      cancelAllOrders: (query) => apiRequest('DELETE', '/exchange/api/v2/info/cancelAllOrders', { query }),
     },
     pools: (query) => apiRequest('GET', '/main/api/v2/pools', { query })
   }
