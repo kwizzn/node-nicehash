@@ -1,10 +1,10 @@
 {
   "name": "node-nicehash",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist",
   "files": [
-    "dist/",
+    "dist",
     "index.d.ts"
   ],
   "scripts": {
