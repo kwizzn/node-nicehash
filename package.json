@@ -1,5 +1,5 @@
 {
-  "name": "node-nicehash",
+  "name": "@kwizzn/node-nicehash",
   "version": "1.0.1",
   "description": "",
   "main": "dist",

@@ -56,7 +56,7 @@ const createApiCall = ({ key, secret, organizationId, endpoint, getTime = create
     'X-Auth': `${key}:${createSignature(input, secret)}`,
     'X-Request-Id': nonce,
     'X-User-Agent': 'MiniQ',
-    'X-User-Lang': 'zh'
+    'X-User-Lang': 'en'
   }
 
   try {
