@@ -1,5 +1,5 @@
 # node-nicehash
-> [nicehash.com](https://www.nicehash.com/docs) nodejs api client
+> [nicehash.com](https://www.nicehash.com/docs) nodejs api client.
 
 ### Installation
 ```bash
