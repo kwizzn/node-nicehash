@@ -9,8 +9,7 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "babel src -d dist",
-    "postinstall": "npm run build",
+    "postinstall": "babel src -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
